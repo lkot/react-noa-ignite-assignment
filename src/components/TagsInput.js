@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './TagsInput.css';
 
-const TagsInput = ({lang}) => {
+const TagsInput = ({ lang, onTagAdded }) => {
 	const [tags, setTags] = useState([]);
 
 	const handleKeyDown = (e) => {
@@ -12,6 +12,7 @@ const TagsInput = ({lang}) => {
 		if (!value.trim()) return;
 		// Adding a new tag on enter.
 		setTags([...tags, value]);
+		onTagAdded(value);
 		// console.log(tags);
 		e.target.value = '';
 	};
@@ -20,11 +21,12 @@ const TagsInput = ({lang}) => {
 		setTags(tags.filter((el, i) => i !== index));
 	};
 
-    function addTag(e) {
+	function addTag(e) {
 		// console.log(e.target);
 		const newTag = e.target.innerText;
 		setTags([...tags, newTag]);
-        // console.log(tags);
+		onTagAdded(newTag);
+		// console.log(tags);
 	}
 
 	return (
@@ -46,7 +48,7 @@ const TagsInput = ({lang}) => {
 				/>
 			</div>
 
-            {/* Autocomplete suggestions list */}
+			{/* Autocomplete suggestions list */}
 			<ul className='data-result'>
 				{lang.map((item, index) => {
 					return (
