@@ -5,7 +5,10 @@ const TagsInput = () => {
     return (
 		<>
 			<div className='tags-input-container'>
-                TagsInput Component
+                <div className='tag-item'>
+                    <span className="text">JavaScript</span>
+                    <span className="close">&times;</span>
+                </div>
 			</div>
 		</>
 	);
