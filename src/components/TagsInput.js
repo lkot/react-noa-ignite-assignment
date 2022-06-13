@@ -20,6 +20,13 @@ const TagsInput = ({lang}) => {
 		setTags(tags.filter((el, i) => i !== index));
 	};
 
+    function addTag(e) {
+		// console.log(e.target);
+		const newTag = e.target.innerText;
+		setTags([...tags, newTag]);
+        // console.log(tags);
+	}
+
 	return (
 		<>
 			<div className='tags-input-container'>
@@ -38,6 +45,19 @@ const TagsInput = ({lang}) => {
 					placeholder='Type your skills here...'
 				/>
 			</div>
+
+            {/* Autocomplete suggestions list */}
+			<ul className='data-result'>
+				{lang.map((item, index) => {
+					return (
+						<div key={index}>
+							<li onClick={addTag} className='data-item'>
+								{item}
+							</li>
+						</div>
+					);
+				})}
+			</ul>
 		</>
 	);
 };
