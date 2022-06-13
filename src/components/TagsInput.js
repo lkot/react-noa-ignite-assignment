@@ -16,13 +16,19 @@ const TagsInput = () => {
 		e.target.value = '';
 	};
 
+	const removeTag = (index) => {
+		setTags(tags.filter((el, i) => i !== index));
+	};
+
 	return (
 		<>
 			<div className='tags-input-container'>
 				{tags.map((tag, index) => (
 					<div className='tag-item' key={index}>
 						<span className='text'>{tag}</span>
-						<span className='close'>&times;</span>
+						<span onClick={() => removeTag(index)} className='close'>
+							&times;
+						</span>
 					</div>
 				))}
 				<input
