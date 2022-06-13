@@ -4,6 +4,7 @@ import './TagsInput.css';
 const TagsInput = ({ lang, onTagAdded }) => {
 	const [tags, setTags] = useState([]);
 
+    // Adding tags on enter.
 	const handleKeyDown = (e) => {
 		if (e.key !== 'Enter') {
 			return;
@@ -21,13 +22,13 @@ const TagsInput = ({ lang, onTagAdded }) => {
 		setTags(tags.filter((el, i) => i !== index));
 	};
 
-	function addTag(e) {
-		// console.log(e.target);
+    const addTag = (e) => {
+        // console.log(e.target);
 		const newTag = e.target.innerText;
 		setTags([...tags, newTag]);
 		onTagAdded(newTag);
 		// console.log(tags);
-	}
+    }
 
 	return (
 		<>
