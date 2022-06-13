@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './TagsInput.css';
 
-const TagsInput = () => {
+const TagsInput = ({lang}) => {
 	const [tags, setTags] = useState([]);
 
 	const handleKeyDown = (e) => {
