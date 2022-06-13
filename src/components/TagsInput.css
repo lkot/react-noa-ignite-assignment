@@ -31,3 +31,17 @@
 	font-size: 18px;
 	cursor: pointer;
 }
+
+.tags-input {
+	flex-grow: 1;
+	padding: 0.5em 0;
+	border: none;
+	outline: none;
+	color: #fff;
+	font-family: inherit;
+	background-color: transparent;
+}
+
+.tags-input::placeholder {
+	color: #fff;
+}

@@ -9,6 +9,11 @@ const TagsInput = () => {
                     <span className="text">JavaScript</span>
                     <span className="close">&times;</span>
                 </div>
+                <input
+					type='text'
+					className='tags-input'
+					placeholder='Type your skills here...'
+				/>
 			</div>
 		</>
 	);
