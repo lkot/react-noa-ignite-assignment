@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './TagsInput.css';
 
 const TagsInput = ({ options }) => {
 	const [tags, setTags] = useState([]);
 	const [inputValue, setInputValue] = useState('');
 	const [availableOptions, setAvailableOptions] = useState(options);
+	const [suggestions, setSuggestions] = useState([]);
+
+	useEffect(() => {
+		const filteredData = availableOptions.filter((option) => option.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
+		setSuggestions(filteredData);
+	}, [inputValue])
 
 	const handleKeyDown = (e) => {
 		if (e.key === 'Enter') {
@@ -67,7 +73,7 @@ const TagsInput = ({ options }) => {
 
 			{/* Autocomplete suggestions list */}
 			<ul className='data-result'>
-				{availableOptions.map((item) => {
+				{suggestions.map((item) => {
 					return (
 						<div key={item}>
 							<li onClick={handleListElementClick} className='data-item'>
