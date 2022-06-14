@@ -1,34 +1,48 @@
 import { useState } from 'react';
 import './TagsInput.css';
 
-const TagsInput = ({ lang, onTagAdded }) => {
+const TagsInput = ({ options }) => {
 	const [tags, setTags] = useState([]);
+	const [inputValue, setInputValue] = useState('');
+	const [availableOptions, setAvailableOptions] = useState(options);
 
-    // Adding tags on enter.
 	const handleKeyDown = (e) => {
-		if (e.key !== 'Enter') {
-			return;
+		if (e.key === 'Enter') {
+			addTag(e.target.value);
 		}
-		const value = e.target.value;
-		if (!value.trim()) return;
-		// Adding a new tag on enter.
-		setTags([...tags, value]);
-		onTagAdded(value);
-		// console.log(tags);
-		e.target.value = '';
 	};
 
 	const removeTag = (index) => {
 		setTags(tags.filter((el, i) => i !== index));
 	};
 
-    const addTag = (e) => {
-        // console.log(e.target);
-		const newTag = e.target.innerText;
-		setTags([...tags, newTag]);
-		onTagAdded(newTag);
-		// console.log(tags);
-    }
+	const handleListElementClick = (e) => {
+		addTag(e.target.innerText);
+	};
+
+	const addTag = (newTag) => {
+		if (newTag.trim()) {
+			const foundTag = tags.find(
+				(tag) => tag.toLowerCase() === newTag.toLowerCase()
+			);
+			if (!foundTag) {
+				setTags([...tags, newTag]);
+				setInputValue('');
+
+				const foundOption = availableOptions.find(
+					(option) => option.toLowerCase() === newTag.toLowerCase()
+				);
+				if (!foundOption) {
+					setAvailableOptions([...availableOptions, newTag]);
+				}
+			}
+		}
+	};
+
+	const handleTypedText = (e) => {
+		const searchedText = e.target.value;
+		setInputValue(searchedText);
+	};
 
 	return (
 		<>
@@ -42,6 +56,8 @@ const TagsInput = ({ lang, onTagAdded }) => {
 					</div>
 				))}
 				<input
+					value={inputValue}
+					onChange={handleTypedText}
 					onKeyDown={handleKeyDown}
 					type='text'
 					className='tags-input'
@@ -51,10 +67,10 @@ const TagsInput = ({ lang, onTagAdded }) => {
 
 			{/* Autocomplete suggestions list */}
 			<ul className='data-result'>
-				{lang.map((item, index) => {
+				{availableOptions.map((item) => {
 					return (
-						<div key={index}>
-							<li onClick={addTag} className='data-item'>
+						<div key={item}>
+							<li onClick={handleListElementClick} className='data-item'>
 								{item}
 							</li>
 						</div>
