@@ -8,9 +8,24 @@ const TagsInput = ({ options }) => {
 	const [suggestions, setSuggestions] = useState([]);
 
 	useEffect(() => {
-		const filteredData = availableOptions.filter((option) => option.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
-		setSuggestions(filteredData);
-	}, [inputValue])
+		if (inputValue) {
+			// Filtered options according to what user typed.
+			const filteredOptions = availableOptions.filter(
+				(option) => option.toLowerCase().indexOf(inputValue.toLowerCase()) > -1
+			);
+
+			const lowercaseTags = tags.map((tag) => tag.toLowerCase());
+
+			// Suggestions left (without values from tags added)
+			const filteredSuggestions = filteredOptions.filter(
+				(filtered) => !lowercaseTags.includes(filtered.toLowerCase())
+			);
+
+			setSuggestions(filteredSuggestions);
+		} else {
+			setSuggestions([]);
+		}
+	}, [inputValue, tags, availableOptions]);
 
 	const handleKeyDown = (e) => {
 		if (e.key === 'Enter') {
@@ -72,17 +87,19 @@ const TagsInput = ({ options }) => {
 			</div>
 
 			{/* Autocomplete suggestions list */}
-			<ul className='data-result'>
-				{suggestions.map((item) => {
-					return (
-						<div key={item}>
-							<li onClick={handleListElementClick} className='data-item'>
-								{item}
-							</li>
-						</div>
-					);
-				})}
-			</ul>
+			{suggestions.length > 0 && (
+				<ul className='data-result'>
+					{suggestions.map((item) => {
+						return (
+							<div key={item}>
+								<li onClick={handleListElementClick} className='data-item'>
+									{item}
+								</li>
+							</div>
+						);
+					})}
+				</ul>
+			)}
 		</>
 	);
 };
