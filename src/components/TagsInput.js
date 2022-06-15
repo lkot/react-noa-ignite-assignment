@@ -32,11 +32,13 @@ const TagsInput = ({ options }) => {
 			addTag(e.target.value);
 		}
 	};
-
-	const removeTag = (index) => {
-		setTags(tags.filter((el, i) => i !== index));
+	
+	const handleTypedText = (e) => {
+		const searchedText = e.target.value;
+		setInputValue(searchedText);
 	};
 
+	
 	const handleListElementClick = (e) => {
 		addTag(e.target.innerText);
 	};
@@ -60,9 +62,8 @@ const TagsInput = ({ options }) => {
 		}
 	};
 
-	const handleTypedText = (e) => {
-		const searchedText = e.target.value;
-		setInputValue(searchedText);
+	const removeTag = (index) => {
+		setTags(tags.filter((el, i) => i !== index));
 	};
 
 	return (
