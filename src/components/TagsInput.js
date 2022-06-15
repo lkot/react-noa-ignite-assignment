@@ -6,6 +6,7 @@ const TagsInput = ({ options }) => {
 	const [inputValue, setInputValue] = useState('');
 	const [availableOptions, setAvailableOptions] = useState(options);
 	const [suggestions, setSuggestions] = useState([]);
+	const [activeItemIndex, setActiveItemIndex] = useState(-1);
 
 	useEffect(() => {
 		if (inputValue) {
@@ -28,8 +29,27 @@ const TagsInput = ({ options }) => {
 	}, [inputValue, tags, availableOptions]);
 
 	const handleKeyDown = (e) => {
-		if (e.key === 'Enter') {
-			addTag(e.target.value);
+		if (e.keyCode === 13) {
+			const value = e.target.value.trim();
+			if (activeItemIndex > -1) {
+				const selectedItem = suggestions[activeItemIndex];
+				addTag(selectedItem);
+				setActiveItemIndex(-1);
+			} else if (tags.length === 0 || tags.find((tag) => tag.toLowerCase() !== value.toLowerCase())) {
+				addTag(value);
+			}
+		} else if (e.keyCode === 38) {
+			if (activeItemIndex > 0) {
+				setActiveItemIndex(activeItemIndex - 1);
+			} else {
+				setActiveItemIndex(suggestions.length - 1);
+			}
+		} else if (e.keyCode === 40) {
+			if (activeItemIndex !== suggestions.length - 1) {
+				setActiveItemIndex(activeItemIndex + 1);
+			} else {
+				setActiveItemIndex(0);	
+			}
 		}
 	};
 	
@@ -90,12 +110,15 @@ const TagsInput = ({ options }) => {
 			{/* Autocomplete suggestions list */}
 			{suggestions.length > 0 && (
 				<ul className='data-result'>
-					{suggestions.map((item) => {
+					{suggestions.map((item, index) => {
 						return (
 							<div key={item}>
-								<li onClick={handleListElementClick} className='data-item'>
-									{item}
-								</li>
+							<li
+								key={index} onClick={handleListElementClick}
+								className={`data-item ${activeItemIndex === index ? 'active' : ''}`}
+							>
+								{item}
+							</li>
 							</div>
 						);
 					})}

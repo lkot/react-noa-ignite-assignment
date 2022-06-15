@@ -68,6 +68,13 @@
     display: flex;
     align-items: center;
     color: black;
-    margin-left: 5px;
     cursor: pointer;
   }
+
+  .data-result .data-item:hover {
+	background-color: #ddd;
+}		
+
+.data-result .data-item.active {
+	background-color: #ccc;
+}
