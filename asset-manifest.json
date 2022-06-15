@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/react-noa-ignite-assignment/static/css/main.08ca7d65.css",
+    "main.js": "/react-noa-ignite-assignment/static/js/main.fa8632d2.js",
+    "index.html": "/react-noa-ignite-assignment/index.html",
+    "main.08ca7d65.css.map": "/react-noa-ignite-assignment/static/css/main.08ca7d65.css.map",
+    "main.fa8632d2.js.map": "/react-noa-ignite-assignment/static/js/main.fa8632d2.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.08ca7d65.css",
+    "static/js/main.fa8632d2.js"
+  ]
+}
